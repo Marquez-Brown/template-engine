@@ -13,6 +13,53 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+const promptUser = () => 
+  inquirer.prompt([
+    {
+      type: 'confirm',
+      message: 'Would you like to add a team member today?',
+      name: 'Boolean',
+      when: (answers) => answers.boolean === false
+    },
+    {
+      type: 'list',
+      message: 'What is the role of the employee',
+      name: 'role',
+      choices: ['Manager', 'Engineer', 'Intern']
+        
+      },
+    {
+      type: 'input',
+      message: 'Name',
+      name: 'name',
+      
+    },
+    {
+      type: 'input',
+      message: 'ID',
+      name: 'ID',
+        
+      },
+    
+    {
+      type: 'number',
+      message: 'Enter your team members office number',
+      name: 'officeNumber',
+      
+    },
+    {
+        type: 'input',
+        message: 'Email',
+        name: 'Email',
+        
+      },
+  ]);
+
+
+promptUser()
+.then((answers) => writeFileAsync('outputPath', render(answers)))
+.then(() => console.log('Successfully wrote to readme.md'))
+.catch((err) => console.error(err));
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
